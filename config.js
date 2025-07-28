@@ -47,7 +47,7 @@ const WEBSITE_CONFIG = {
     // 🔗 SOCIAL MEDIA LINKS
     // ==========================================
     linkedinUrl: "https://linkedin.com/in/kietpham",
-    githubUrl: "https://github.com/kietpham"
+    githubUrl: "https://github.com/Kite1219/"
 };
 
 // ==========================================
