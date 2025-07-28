@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CDN Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    
+    <!-- Website Configuration -->
+    <script src="config.js"></script>
+    
+    <style>
+        /* CSS Custom Properties */
+        :root {
+            --primary-bg: #0a0a0a;
+            --secondary-bg: #1a1a1a;
+            --card-bg: #2d2d2d;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --accent-color: #ec4899;
+            --accent-gradient: linear-gradient(135deg, #ec4899, #f59e0b);
+            --border-color: #333;
+            --shadow-dark: 0 20px 60px rgba(0, 0, 0, 0.3);
+            --shadow-glow: 0 0 30px rgba(236, 72, 153, 0.1);
+        }
+
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background Particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+            opacity: 0.3;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            background: radial-gradient(circle at 50% 50%, rgba(0, 212, 255, 0.1) 0%, transparent 50%);
+        }
+
+        .hero-content {
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 8rem);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-family: 'Space Grotesk', 'Inter', sans-serif;
+            background: linear-gradient(135deg, #ec4899 0%, #f59e0b 100%);
+            background-size: 200% 200%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.02em;
+            line-height: 0.9;
+            text-transform: uppercase;
+            position: relative;
+            animation: gradientShift 4s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .hero h1::before {
+            display: none;
+        }
+
+        .hero .subtitle {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+
+        .contact-btn {
+            display: inline-block !important;
+            padding: 1rem 3rem;
+            background: transparent;
+            border: 2px solid;
+            border-image: linear-gradient(135deg, #ec4899, #f59e0b) 1;
+            color: #ec4899;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            letter-spacing: 0.05em;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            margin-top: 2rem;
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+
+        .contact-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ec4899, #f59e0b);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .contact-btn:hover {
+            color: var(--primary-bg);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .contact-btn:hover::before {
+            left: 0;
+        }
+
+        /* Projects Section */
+        .projects {
+            padding: 8rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 4rem;
+            margin-top: 6rem;
+            padding: 0;
+            color: #ffffff;
+            background: linear-gradient(135deg, #ec4899 0%, #f59e0b 100%);
+            background-size: 200% 200%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Space Grotesk', 'Inter', sans-serif;
+            letter-spacing: 0.05em;
+            opacity: 1 !important;
+            visibility: visible !important;
+            display: block !important;
+            position: relative;
+            animation: gradientShift 4s ease-in-out infinite;
+            text-transform: uppercase;
+        }
+
+        .section-title::before {
+            display: none;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(135deg, #ec4899, #f59e0b);
+            border-radius: 2px;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3px;
+            margin-top: 4rem;      
+            padding: 3px;
+            border-radius: 8px;
+        }
+
+        .project-card {
+            background: var(--primary-bg);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .project-card:hover {
+            transform: scale(1.02);
+            z-index: 10;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 9/16;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .video-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+            display: block;
+        }
+
+        /* Force YouTube iframe to fill container */
+        .video-container iframe {
+            width: 100% !important;
+            height: 100% !important;
+            position: absolute;
+            top: 0;
+            left: 0;
+            object-fit: cover;
+        }
+
+        .project-card:hover .video-iframe {
+            transform: scale(1.05);
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .video-overlay.hidden {
+            opacity: 0;
+        }
+
+        .click-indicator {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 212, 255, 0.9);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .project-card:hover .click-indicator {
+            opacity: 1;
+        }
+
+        /* View Counter */
+        .view-counter {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            color: #ffffff;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            min-width: 60px;
+            justify-content: center;
+        }
+
+        .view-counter .eye-icon {
+            font-size: 0.7rem;
+            opacity: 0.8;
+        }
+
+
+
+        /* Contact Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-content {
+            background: var(--secondary-bg);
+            margin: 10% auto;
+            padding: 3rem;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            box-shadow: var(--shadow-dark);
+        }
+
+        .close {
+            color: var(--text-secondary);
+            float: right;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .close:hover {
+            color: var(--accent-color);
+        }
+
+        .contact-info {
+            margin-top: 2rem;
+        }
+
+        .contact-info h2 {
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .contact-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--card-bg);
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .contact-link:hover {
+            border-color: var(--accent-color);
+            transform: translateX(10px);
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            border-top-color: #ffffff;
+            animation: simpleSpinning 1s linear infinite;
+            z-index: 10;
+        }
+
+        @keyframes simpleSpinning {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Loading state for video containers */
+        .video-container .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 5;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .projects {
+                padding: 4rem 1rem;
+            }
+            
+            .projects-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 2px;
+                padding: 2px;
+            }
+            
+            .modal-content {
+                margin: 20% auto;
+                padding: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .contact-btn {
+                padding: 0.8rem 2rem;
+                font-size: 1rem;
+            }
+            
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2px;
+            }
+            
+            .click-indicator {
+                font-size: 0.7rem;
+                padding: 0.3rem 0.6rem;
+            }
+
+            .view-counter {
+                bottom: 8px;
+                left: 8px;
+                font-size: 0.65rem;
+                padding: 3px 6px;
+                min-width: 50px;
+            }
+
+            .view-counter .eye-icon {
+                font-size: 0.6rem;
+            }
+        }
+
+        /* Scroll Animation Classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide-up {
+            opacity: 0;
+            transform: translateY(100px);
+            transition: all 0.8s ease;
+        }
+
+        .slide-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background Particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-content" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+            <h1></h1>
+            <p class="subtitle"></p>
+            <a href="#" target="_blank" class="contact-btn">
+            </a>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects" id="projects">
+        <h2 class="section-title"></h2>
+        <div class="projects-grid" id="projectsGrid">
+            <!-- Projects will be loaded dynamically -->
+            <div class="project-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
+                <div class="video-container">
+                    <div class="loading" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></div>
+                </div>
+            </div>
+            <div class="project-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+                <div class="video-container">
+                    <div class="loading" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></div>
+                </div>
+            </div>
+            <div class="project-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
+                <div class="video-container">
+                    <div class="loading" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Modal -->
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <div class="contact-info">
+                <h2></h2>
+                <div class="contact-links">
+                    <a href="#" class="contact-link">
+                        <span>📧</span>
+                        <span></span>
+                    </a>
+                    <a href="#" target="_blank" class="contact-link">
+                        <span>💼</span>
+                        <span>LinkedIn Profile</span>
+                    </a>
+                    <a href="#" target="_blank" class="contact-link">
+                        <span>🐱</span>
+                        <span>GitHub Portfolio</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // 🔧 TECHNICAL CODE - DON'T CHANGE
+        // ==========================================
+        // To customize your website, edit the config.js file instead!
+        
+        // YouTube API Configuration
+        const API_KEY = WEBSITE_CONFIG.youtubeApiKey;
+        const CHANNEL_ID = WEBSITE_CONFIG.youtubeChannelId;
+        let players = [];
+        let isYouTubeAPIReady = false;
+
+        // Update page title and content when page loads
+        function updatePageContent() {
+            // Update page title
+            document.title = WEBSITE_CONFIG.pageTitle;
+            
+            // Update hero section
+            document.querySelector('.hero h1').textContent = WEBSITE_CONFIG.name;
+            document.querySelector('.hero .subtitle').textContent = WEBSITE_CONFIG.title;
+            document.querySelector('.contact-btn').textContent = WEBSITE_CONFIG.contactButtonText;
+            document.querySelector('.contact-btn').href = `https://mail.google.com/mail/?view=cm&fs=1&to=${WEBSITE_CONFIG.email}`;
+            
+            // Update projects section title
+            document.querySelector('.section-title').textContent = WEBSITE_CONFIG.projectsTitle;
+            
+            // Update contact modal content
+            document.querySelector('.contact-info h2').textContent = WEBSITE_CONFIG.contactModalTitle;
+            
+            // Update contact links
+            const contactLinks = document.querySelectorAll('.contact-link');
+            if (contactLinks[0]) {
+                contactLinks[0].href = `mailto:${WEBSITE_CONFIG.email}`;
+                contactLinks[0].querySelector('span:last-child').textContent = WEBSITE_CONFIG.email;
+            }
+            if (contactLinks[1]) {
+                contactLinks[1].href = WEBSITE_CONFIG.linkedinUrl;
+            }
+            if (contactLinks[2]) {
+                contactLinks[2].href = WEBSITE_CONFIG.githubUrl;
+            }
+        }
+
+        // Load YouTube IFrame API
+        function loadYouTubeAPI() {
+            const tag = document.createElement('script');
+            tag.src = 'https://www.youtube.com/iframe_api';
+            const firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        }
+
+        // YouTube API Ready Callback
+        function onYouTubeIframeAPIReady() {
+            isYouTubeAPIReady = true;
+            loadChannelVideos();
+        }
+
+        // Fetch videos from channel
+        async function loadChannelVideos() {
+            try {
+                const response = await fetch(
+                    `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet&order=date&maxResults=9&type=video`
+                );
+                const data = await response.json();
+                
+                if (data.items && data.items.length > 0) {
+                    createVideoCards(data.items);
+                } else {
+                    // Fallback with sample video IDs if API fails
+                    const fallbackVideos = [
+                        { id: { videoId: 'dQw4w9WgXcQ' }, snippet: { title: 'Project Demo 1' } },
+                        { id: { videoId: 'jNQXAC9IVRw' }, snippet: { title: 'Project Demo 2' } },
+                        { id: { videoId: 'fJ9rUzIMcZQ' }, snippet: { title: 'Project Demo 3' } }
+                    ];
+                    createVideoCards(fallbackVideos);
+                }
+            } catch (error) {
+                console.error('Error loading videos:', error);
+                // Fallback videos
+                const fallbackVideos = [
+                    { id: { videoId: 'dQw4w9WgXcQ' }, snippet: { title: 'Project Demo 1' } },
+                    { id: { videoId: 'jNQXAC9IVRw' }, snippet: { title: 'Project Demo 2' } },
+                    { id: { videoId: 'fJ9rUzIMcZQ' }, snippet: { title: 'Project Demo 3' } }
+                ];
+                createVideoCards(fallbackVideos);
+            }
+        }
+
+        // Fetch video statistics (view counts)
+        async function fetchVideoStats(videoIds) {
+            try {
+                const idsString = videoIds.join(',');
+                const response = await fetch(
+                    `https://www.googleapis.com/youtube/v3/videos?key=${API_KEY}&id=${idsString}&part=statistics`
+                );
+                const data = await response.json();
+                return data.items || [];
+            } catch (error) {
+                console.error('Error fetching video stats:', error);
+                return [];
+            }
+        }
+
+        // Format view count for display
+        function formatViewCount(count) {
+            const num = parseInt(count);
+            if (num >= 1000000) {
+                return (num / 1000000).toFixed(1) + 'M';
+            } else if (num >= 1000) {
+                return (num / 1000).toFixed(1) + 'K';
+            }
+            return num.toString();
+        }
+
+        // Update view counts for all videos
+        async function updateViewCounts() {
+            const videoIds = players.map(p => p.videoId);
+            if (videoIds.length === 0) return;
+
+            const stats = await fetchVideoStats(videoIds);
+            
+            stats.forEach(stat => {
+                const videoId = stat.id;
+                const viewCount = stat.statistics.viewCount;
+                const playerData = players.find(p => p.videoId === videoId);
+                
+                if (playerData) {
+                    let viewCounter = playerData.element.querySelector('.view-counter');
+                    
+                    // Create view counter if it doesn't exist
+                    if (!viewCounter) {
+                        viewCounter = document.createElement('div');
+                        viewCounter.className = 'view-counter';
+                        const videoContainer = playerData.element.querySelector('.video-container');
+                        videoContainer.appendChild(viewCounter);
+                    }
+                    
+                    // Update view counter content
+                    viewCounter.innerHTML = `<span class="eye-icon">👁</span>${formatViewCount(viewCount)}`;
+                }
+            });
+        }
+
+        // Create video cards
+        function createVideoCards(videos) {
+            const grid = document.getElementById('projectsGrid');
+            grid.innerHTML = '';
+
+            videos.forEach((video, index) => {
+                const card = document.createElement('div');
+                card.className = 'project-card';
+                card.setAttribute('data-aos', 'fade-up');
+                card.setAttribute('data-aos-duration', '800');
+                card.setAttribute('data-aos-delay', `${(index % 3 + 1) * 100}`);
+
+                const videoId = video.id.videoId;
+                const playerId = `player-${index}`;
+                const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
+
+                card.innerHTML = `
+                    <div class="video-container">
+                        <div id="${playerId}"></div>
+                        <div class="video-overlay">
+                            <div class="loading"></div>
+                        </div>
+                    </div>
+                `;
+
+                // Add click functionality to open video in new tab
+                card.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    // Try to open as YouTube Shorts first, fallback to regular video
+                    const shortsUrl = `https://www.youtube.com/shorts/${videoId}`;
+                    window.open(shortsUrl, '_blank');
+                });
+
+                grid.appendChild(card);
+
+                // Create YouTube player
+                if (isYouTubeAPIReady) {
+                    const player = new YT.Player(playerId, {
+                        height: '100%',
+                        width: '100%',
+                        videoId: videoId,
+                        playerVars: {
+                            autoplay: 0,
+                            mute: 1,
+                            controls: 0,
+                            showinfo: 0,
+                            rel: 0,
+                            modestbranding: 1,
+                            iv_load_policy: 3,
+                            cc_load_policy: 0,
+                            fs: 0,
+                            disablekb: 1,
+                            loop: 1,
+                            playlist: videoId
+                        },
+                        events: {
+                            onReady: (event) => {
+                                players.push({ player, element: card, videoId });
+                                setupIntersectionObserver();
+                                
+                                // Hide loading overlay
+                                const overlay = card.querySelector('.video-overlay');
+                                if (overlay) {
+                                    overlay.classList.add('hidden');
+                                }
+
+                                // Update view counts when all players are ready
+                                if (players.length === videos.length) {
+                                    setTimeout(updateViewCounts, 1000);
+                                }
+                            },
+                            onStateChange: (event) => {
+                                // Auto-loop video when it ends
+                                if (event.data === YT.PlayerState.ENDED) {
+                                    event.target.playVideo();
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+
+            // Refresh AOS animations
+            AOS.refresh();
+        }
+
+        // Intersection Observer for video autoplay
+        function setupIntersectionObserver() {
+            const options = {
+                threshold: 0.3,
+                rootMargin: '0px 0px -10% 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const playerData = players.find(p => p.element === entry.target);
+                    if (playerData && playerData.player) {
+                        try {
+                            if (entry.isIntersecting) {
+                                // Play and ensure looping
+                                playerData.player.playVideo();
+                                setTimeout(() => {
+                                    if (playerData.player.getPlayerState() === YT.PlayerState.ENDED) {
+                                        playerData.player.playVideo();
+                                    }
+                                }, 100);
+                            } else {
+                                // Pause when out of view
+                                playerData.player.pauseVideo();
+                            }
+                        } catch (error) {
+                            console.log('Player not ready yet:', error);
+                        }
+                    }
+                });
+            }, options);
+
+            // Only observe if we have players ready
+            if (players.length > 0) {
+                players.forEach(playerData => {
+                    observer.observe(playerData.element);
+                });
+            }
+        }
+
+        // Create animated particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // GSAP Animations
+        function initGSAP() {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Hero text animation
+            gsap.timeline()
+                .from('.hero h1', {
+                    duration: 1.2,
+                    y: 100,
+                    opacity: 0,
+                    ease: 'power3.out',
+                    delay: 0.5
+                })
+                .from('.hero .subtitle', {
+                    duration: 1,
+                    y: 50,
+                    opacity: 0,
+                    ease: 'power3.out'
+                }, '-=0.5')
+                .from('.contact-btn', {
+                    duration: 0.8,
+                    y: 30,
+                    opacity: 0,
+                    ease: 'power3.out'
+                }, '-=0.3');
+
+            // Projects section animation
+            gsap.from('.section-title', {
+                scrollTrigger: {
+                    trigger: '.projects',
+                    start: 'top 80%'
+                },
+                duration: 1,
+                y: 50,
+                opacity: 0,
+                ease: 'power3.out'
+            });
+
+            // Project cards stagger animation
+            gsap.from('.project-card', {
+                scrollTrigger: {
+                    trigger: '.projects-grid',
+                    start: 'top 80%'
+                },
+                duration: 0.8,
+                y: 60,
+                opacity: 0,
+                stagger: 0.2,
+                ease: 'power3.out'
+            });
+        }
+
+        // Contact functionality (now direct email link)
+        function initContact() {
+            // Contact button now directly opens email - no modal needed
+            console.log('Contact button configured for direct email');
+        }
+
+        // Initialize everything
+        function init() {
+            // Initialize AOS
+            AOS.init({
+                duration: 1000,
+                once: true,
+                offset: 100
+            });
+
+            // Initialize GSAP animations
+            initGSAP();
+
+            // Initialize contact
+            initContact();
+
+            // Create particles
+            createParticles();
+
+            // Load YouTube API
+            loadYouTubeAPI();
+
+            // Set up periodic view count updates (every 5 minutes)
+            setInterval(() => {
+                if (players.length > 0) {
+                    updateViewCounts();
+                }
+            }, 300000); // 5 minutes = 300,000 milliseconds
+
+            // Update page content after DOM is loaded
+            updatePageContent();
+        }
+
+        // Start when DOM is loaded
+        document.addEventListener('DOMContentLoaded', init);
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            AOS.refresh();
+        });
+
+        // Smooth scroll for any internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Make functions globally available for YouTube API
+        window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
+    </script>
+</body>
+</html> 
