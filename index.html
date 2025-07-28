@@ -19,18 +19,19 @@
     <script src="config.js"></script>
     
     <style>
-        /* CSS Custom Properties */
+        /* CSS Custom Properties - Ultra Dark Theme */
         :root {
-            --primary-bg: #0a0a0a;
-            --secondary-bg: #1a1a1a;
-            --card-bg: #2d2d2d;
+            --primary-bg: #020202;
+            --sidebar-bg: #000000;
+            --card-bg: #111111;
             --text-primary: #ffffff;
-            --text-secondary: #b0b0b0;
-            --accent-color: #ec4899;
-            --accent-gradient: linear-gradient(135deg, #ec4899, #f59e0b);
-            --border-color: #333;
-            --shadow-dark: 0 20px 60px rgba(0, 0, 0, 0.3);
-            --shadow-glow: 0 0 30px rgba(236, 72, 153, 0.1);
+            --text-secondary: #cccccc;
+            --text-muted: #888888;
+            --accent-color: #10a37f;
+            --accent-hover: #0d8b6b;
+            --border-color: #333333;
+            --shadow-dark: 0 4px 16px rgba(0, 0, 0, 0.8);
+            --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.5);
         }
 
         /* Reset and Base Styles */
@@ -67,174 +68,149 @@
             position: absolute;
             width: 2px;
             height: 2px;
-            background: var(--accent-color);
+            background: var(--text-secondary);
             border-radius: 50%;
-            animation: float 6s ease-in-out infinite;
-            opacity: 0.3;
+            animation: float 8s ease-in-out infinite;
+            opacity: 0.05;
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.02; }
+            50% { transform: translateY(-30px) rotate(180deg); opacity: 0.1; }
         }
 
-        /* Hero Section */
-        .hero {
-            height: 100vh;
+        /* Main Layout */
+        .main-container {
+            display: flex;
+            min-height: 100vh;
+            background: var(--primary-bg);
+        }
+
+        /* Sidebar - Modern ChatGPT Style */
+        .sidebar {
+            width: 320px;
+            background: var(--sidebar-bg);
+            padding: 2rem 3rem 2rem 1.5rem;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items: center;
-            text-align: center;
-            position: relative;
-            background: radial-gradient(circle at 50% 50%, rgba(0, 212, 255, 0.1) 0%, transparent 50%);
-        }
-
-        .hero-content {
-            z-index: 2;
-        }
-
-        .hero h1 {
-            font-size: clamp(3rem, 8vw, 8rem);
-            font-weight: 600;
-            margin-bottom: 1rem;
-            font-family: 'Space Grotesk', 'Inter', sans-serif;
-            background: linear-gradient(135deg, #ec4899 0%, #f59e0b 100%);
-            background-size: 200% 200%;
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: -0.02em;
-            line-height: 0.9;
-            text-transform: uppercase;
-            position: relative;
-            animation: gradientShift 4s ease-in-out infinite;
-        }
-
-        @keyframes gradientShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
-        .hero h1::before {
-            display: none;
-        }
-
-        .hero .subtitle {
-            font-size: clamp(1.2rem, 3vw, 2rem);
-            color: var(--text-secondary);
-            margin-bottom: 3rem;
-            font-weight: 300;
-        }
-
-        .contact-btn {
-            display: inline-block !important;
-            padding: 1rem 3rem;
-            background: transparent;
-            border: 2px solid;
-            border-image: linear-gradient(135deg, #ec4899, #f59e0b) 1;
-            color: #ec4899;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            letter-spacing: 0.05em;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            margin-top: 2rem;
-            opacity: 1 !important;
-            visibility: visible !important;
-        }
-
-        .contact-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #ec4899, #f59e0b);
-            transition: left 0.3s ease;
-            z-index: -1;
-        }
-
-        .contact-btn:hover {
-            color: var(--primary-bg);
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-glow);
-        }
-
-        .contact-btn:hover::before {
+            position: fixed;
+            height: 100vh;
             left: 0;
+            top: 0;
+            border-right: 1px solid var(--border-color);
+        }
+
+        .profile-section {
+            text-align: left;
+            max-width: 280px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; /* Keep text left-aligned */
+        }
+
+        .profile-section h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin: 0 0 0.75rem 0;
+            font-family: 'Inter', sans-serif;
+            color: var(--text-primary);
+            letter-spacing: -0.025em;
+            line-height: 1.2;
+        }
+
+        .profile-section .title {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin: 0 0 1.5rem 0;
+            font-weight: 400;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .profile-section .description {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin: 0 0 2rem 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+
+
+        /* Main Content Area */
+        .main-content {
+            margin-left: 320px;
+            flex: 1;
+            padding: 1rem;
+            background: var(--primary-bg);
         }
 
         /* Projects Section */
         .projects {
-            padding: 8rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
+            padding: 0 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         .section-title {
-            font-size: clamp(2.5rem, 6vw, 4rem);
-            font-weight: 700;
+            font-size: 1.4rem;
+            font-weight: 600;
             text-align: center;
-            margin-bottom: 4rem;
-            margin-top: 6rem;
             padding: 0;
-            color: #ffffff;
-            background: linear-gradient(135deg, #ec4899 0%, #f59e0b 100%);
-            background-size: 200% 200%;
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-family: 'Space Grotesk', 'Inter', sans-serif;
-            letter-spacing: 0.05em;
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            letter-spacing: -0.01em;
             opacity: 1 !important;
             visibility: visible !important;
             display: block !important;
-            position: relative;
-            animation: gradientShift 4s ease-in-out infinite;
-            text-transform: uppercase;
-        }
-
-        .section-title::before {
-            display: none;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 3px;
-            background: linear-gradient(135deg, #ec4899, #f59e0b);
-            border-radius: 2px;
         }
 
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 3px;
-            margin-top: 4rem;      
+            margin-top: 10px;     
             padding: 3px;
             border-radius: 8px;
         }
 
+        .projects-grid::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .projects-grid::-webkit-scrollbar-track {
+            background: var(--sidebar-bg);
+            border-radius: 3px;
+        }
+
+        .projects-grid::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 3px;
+        }
+
+        .projects-grid::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
+        }
+
         .project-card {
-            background: var(--primary-bg);
+            background: var(--card-bg);
             overflow: hidden;
             transition: all 0.3s ease;
             position: relative;
             cursor: pointer;
-            border-radius: 4px;
+            border-radius: 0;
+            border: none;
+            width: 100%;
+            height: auto;
+            margin: 0;
+            padding: 0;
         }
 
         .project-card:hover {
-            transform: scale(1.02);
-            z-index: 10;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-dark);
+            border-color: var(--accent-color);
         }
 
         .video-container {
@@ -243,6 +219,9 @@
             aspect-ratio: 9/16;
             overflow: hidden;
             background: #000;
+            border-radius: 0;
+            margin: 0;
+            padding: 0;
         }
 
         .video-iframe {
@@ -274,7 +253,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.6);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -335,77 +314,7 @@
 
 
 
-        /* Contact Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-        }
 
-        .modal-content {
-            background: var(--secondary-bg);
-            margin: 10% auto;
-            padding: 3rem;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            width: 90%;
-            max-width: 500px;
-            position: relative;
-            box-shadow: var(--shadow-dark);
-        }
-
-        .close {
-            color: var(--text-secondary);
-            float: right;
-            font-size: 2rem;
-            font-weight: bold;
-            cursor: pointer;
-            line-height: 1;
-        }
-
-        .close:hover {
-            color: var(--accent-color);
-        }
-
-        .contact-info {
-            margin-top: 2rem;
-        }
-
-        .contact-info h2 {
-            color: var(--accent-color);
-            margin-bottom: 1.5rem;
-            font-size: 1.8rem;
-        }
-
-        .contact-links {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .contact-link {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            background: var(--card-bg);
-            border-radius: 8px;
-            text-decoration: none;
-            color: var(--text-primary);
-            transition: all 0.3s ease;
-            border: 1px solid transparent;
-        }
-
-        .contact-link:hover {
-            border-color: var(--accent-color);
-            transform: translateX(10px);
-        }
 
         /* Loading Animation */
         .loading {
@@ -434,36 +343,109 @@
         }
 
         /* Responsive Design */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 3rem;
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 280px;
             }
             
-            .projects {
-                padding: 4rem 1rem;
+            .main-content {
+                margin-left: 280px;
             }
             
             .projects-grid {
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-                gap: 2px;
-                padding: 2px;
-            }
-            
-            .modal-content {
-                margin: 20% auto;
-                padding: 2rem;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 3px;
             }
         }
 
-        @media (max-width: 480px) {
-            .contact-btn {
-                padding: 0.8rem 2rem;
-                font-size: 1rem;
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+                padding: 2rem 1.5rem;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .profile-section {
+                text-align: center; /* Center text on mobile */
+                max-width: none;
+                align-items: center; /* Center flex items */
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 0.5rem;
+            }
+            
+            .projects {
+                height: auto;
             }
             
             .projects-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 2px;
+                gap: 4px;
+                overflow-y: visible;
+                padding: 0;
+            }
+            
+            .profile-section h1 {
+                font-size: 1.75rem;
+            }
+
+            .profile-section .title {
+                font-size: 0.9rem;
+            }
+
+            .profile-section .description {
+                font-size: 0.8rem;
+                margin-bottom: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sidebar {
+                padding: 1.5rem 1rem;
+            }
+            
+            .profile-section {
+                text-align: center; /* Ensure center alignment on small mobile */
+                align-items: center;
+            }
+            
+            .main-content {
+                padding: 0.25rem;
+            }
+            
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 3px;
+            }
+            
+            /* Better spacing for very small screens */
+            .main-content {
+                padding: 0.5rem 0.25rem;
+            }
+            
+
+
+            .profile-section h1 {
+                font-size: 1.5rem;
+            }
+
+            .profile-section .title {
+                font-size: 0.85rem;
+                margin-bottom: 1rem;
+            }
+
+            .profile-section .description {
+                font-size: 0.75rem;
+                margin-bottom: 1.25rem;
             }
             
             .click-indicator {
@@ -481,6 +463,31 @@
 
             .view-counter .eye-icon {
                 font-size: 0.6rem;
+            }
+        }
+
+        /* Extra small screens - single column layout */
+        @media (max-width: 360px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 4px;
+            }
+            
+            .profile-section h1 {
+                font-size: 1.25rem;
+            }
+
+            .profile-section .title {
+                font-size: 0.8rem;
+            }
+
+            .profile-section .description {
+                font-size: 0.7rem;
+                margin-bottom: 1rem;
+            }
+            
+            .sidebar {
+                padding: 1rem 0.75rem;
             }
         }
 
@@ -512,62 +519,44 @@
     <!-- Animated Background Particles -->
     <div class="particles" id="particles"></div>
 
-    <!-- Hero Section -->
-    <section class="hero" id="hero">
-        <div class="hero-content" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
-            <h1></h1>
-            <p class="subtitle"></p>
-            <a href="#" target="_blank" class="contact-btn">
-            </a>
-        </div>
-    </section>
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="profile-section" data-aos="fade-right" data-aos-duration="1000">
+                <h1></h1>
+                <p class="title"></p>
+                <p class="description">Passionate about creating innovative electrical solutions and bringing ideas to life through technology.</p>
+            </div>
+        </aside>
 
-    <!-- Projects Section -->
-    <section class="projects" id="projects">
-        <h2 class="section-title"></h2>
-        <div class="projects-grid" id="projectsGrid">
-            <!-- Projects will be loaded dynamically -->
-            <div class="project-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
-                <div class="video-container">
-                    <div class="loading" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></div>
+        <!-- Main Content -->
+        <main class="main-content">
+            <section class="projects" id="projects">
+                <h2 class="section-title"></h2>
+                <div class="projects-grid" id="projectsGrid">
+                    <!-- Projects will be loaded dynamically -->
+                    <div class="project-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
+                        <div class="video-container">
+                            <div class="loading" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></div>
+                        </div>
+                    </div>
+                    <div class="project-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+                        <div class="video-container">
+                            <div class="loading" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></div>
+                        </div>
+                    </div>
+                    <div class="project-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
+                        <div class="video-container">
+                            <div class="loading" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="project-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
-                <div class="video-container">
-                    <div class="loading" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></div>
-                </div>
-            </div>
-            <div class="project-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
-                <div class="video-container">
-                    <div class="loading" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Modal -->
-    <div id="contactModal" class="modal">
-        <div class="modal-content">
-            <span class="close" id="closeModal">&times;</span>
-            <div class="contact-info">
-                <h2></h2>
-                <div class="contact-links">
-                    <a href="#" class="contact-link">
-                        <span>📧</span>
-                        <span></span>
-                    </a>
-                    <a href="#" target="_blank" class="contact-link">
-                        <span>💼</span>
-                        <span>LinkedIn Profile</span>
-                    </a>
-                    <a href="#" target="_blank" class="contact-link">
-                        <span>🐱</span>
-                        <span>GitHub Portfolio</span>
-                    </a>
-                </div>
-            </div>
-        </div>
+            </section>
+        </main>
     </div>
+
+
 
     <script>
         // ==========================================
@@ -586,30 +575,14 @@
             // Update page title
             document.title = WEBSITE_CONFIG.pageTitle;
             
-            // Update hero section
-            document.querySelector('.hero h1').textContent = WEBSITE_CONFIG.name;
-            document.querySelector('.hero .subtitle').textContent = WEBSITE_CONFIG.title;
-            document.querySelector('.contact-btn').textContent = WEBSITE_CONFIG.contactButtonText;
-            document.querySelector('.contact-btn').href = `https://mail.google.com/mail/?view=cm&fs=1&to=${WEBSITE_CONFIG.email}`;
+            // Update profile section
+            document.querySelector('.profile-section h1').textContent = WEBSITE_CONFIG.name;
+            document.querySelector('.profile-section .title').textContent = WEBSITE_CONFIG.title;
             
             // Update projects section title
             document.querySelector('.section-title').textContent = WEBSITE_CONFIG.projectsTitle;
             
-            // Update contact modal content
-            document.querySelector('.contact-info h2').textContent = WEBSITE_CONFIG.contactModalTitle;
-            
-            // Update contact links
-            const contactLinks = document.querySelectorAll('.contact-link');
-            if (contactLinks[0]) {
-                contactLinks[0].href = `mailto:${WEBSITE_CONFIG.email}`;
-                contactLinks[0].querySelector('span:last-child').textContent = WEBSITE_CONFIG.email;
-            }
-            if (contactLinks[1]) {
-                contactLinks[1].href = WEBSITE_CONFIG.linkedinUrl;
-            }
-            if (contactLinks[2]) {
-                contactLinks[2].href = WEBSITE_CONFIG.githubUrl;
-            }
+
         }
 
         // Load YouTube IFrame API
@@ -626,16 +599,66 @@
             loadChannelVideos();
         }
 
-        // Fetch videos from channel
+        // Check if cached data is still valid (less than 30 minutes old)
+        function isCacheValid() {
+            const cacheTimestamp = localStorage.getItem('youtube_cache_timestamp');
+            if (!cacheTimestamp) return false;
+            
+            const thirtyMinutes = 30 * 60 * 1000; // 30 minutes in milliseconds
+            const now = Date.now();
+            const cacheTime = parseInt(cacheTimestamp);
+            
+            return (now - cacheTime) < thirtyMinutes;
+        }
+
+        // Get cached video data
+        function getCachedVideos() {
+            const cachedData = localStorage.getItem('youtube_videos_cache');
+            return cachedData ? JSON.parse(cachedData) : null;
+        }
+
+        // Save video data to cache
+        function saveVideoCache(videos) {
+            localStorage.setItem('youtube_videos_cache', JSON.stringify(videos));
+            localStorage.setItem('youtube_cache_timestamp', Date.now().toString());
+        }
+
+        // Fetch videos from channel with caching
         async function loadChannelVideos() {
+            // Check if we have valid cached data
+            if (isCacheValid()) {
+                const cachedVideos = getCachedVideos();
+                if (cachedVideos) {
+                    console.log('💾 Using cached video data to avoid API limit');
+                    console.log('📊 Cached videos:', cachedVideos.length, 'items');
+                    createVideoCards(cachedVideos);
+                    showSuccessIndicator('Loaded from cache (API limit saved!)');
+                    return;
+                }
+            }
+
+            // Fetch fresh data from API
             try {
+                console.log('🔄 Fetching fresh video data from YouTube API...');
                 const response = await fetch(
                     `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet&order=date&maxResults=9&type=video`
                 );
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
                 const data = await response.json();
                 
                 if (data.items && data.items.length > 0) {
+                    console.log('✅ SUCCESS: Fetched', data.items.length, 'videos from YouTube API');
+                    console.log('📊 Video data:', data.items.map(v => v.snippet.title));
+                    // Save to cache before creating cards
+                    saveVideoCache(data.items);
                     createVideoCards(data.items);
+                    
+                    // Add success indicator to page
+                    showSuccessIndicator('Fresh video data loaded successfully!');
                 } else {
                     // Fallback with sample video IDs if API fails
                     const fallbackVideos = [
@@ -643,31 +666,93 @@
                         { id: { videoId: 'jNQXAC9IVRw' }, snippet: { title: 'Project Demo 2' } },
                         { id: { videoId: 'fJ9rUzIMcZQ' }, snippet: { title: 'Project Demo 3' } }
                     ];
+                    saveVideoCache(fallbackVideos);
                     createVideoCards(fallbackVideos);
                 }
             } catch (error) {
                 console.error('Error loading videos:', error);
-                // Fallback videos
-                const fallbackVideos = [
-                    { id: { videoId: 'dQw4w9WgXcQ' }, snippet: { title: 'Project Demo 1' } },
-                    { id: { videoId: 'jNQXAC9IVRw' }, snippet: { title: 'Project Demo 2' } },
-                    { id: { videoId: 'fJ9rUzIMcZQ' }, snippet: { title: 'Project Demo 3' } }
-                ];
-                createVideoCards(fallbackVideos);
+                
+                // Try to use cached data even if it's old
+                const cachedVideos = getCachedVideos();
+                if (cachedVideos) {
+                    console.log('API failed, using old cached data');
+                    createVideoCards(cachedVideos);
+                } else {
+                    // Final fallback videos
+                    const fallbackVideos = [
+                        { id: { videoId: 'dQw4w9WgXcQ' }, snippet: { title: 'Project Demo 1' } },
+                        { id: { videoId: 'jNQXAC9IVRw' }, snippet: { title: 'Project Demo 2' } },
+                        { id: { videoId: 'fJ9rUzIMcZQ' }, snippet: { title: 'Project Demo 3' } }
+                    ];
+                    createVideoCards(fallbackVideos);
+                }
             }
         }
 
-        // Fetch video statistics (view counts)
+        // Check if stats cache is valid (less than 30 minutes old)
+        function isStatsCacheValid() {
+            const cacheTimestamp = localStorage.getItem('youtube_stats_cache_timestamp');
+            if (!cacheTimestamp) return false;
+            
+            const thirtyMinutes = 30 * 60 * 1000; // 30 minutes in milliseconds
+            const now = Date.now();
+            const cacheTime = parseInt(cacheTimestamp);
+            
+            return (now - cacheTime) < thirtyMinutes;
+        }
+
+        // Get cached stats data
+        function getCachedStats() {
+            const cachedData = localStorage.getItem('youtube_stats_cache');
+            return cachedData ? JSON.parse(cachedData) : null;
+        }
+
+        // Save stats data to cache
+        function saveStatsCache(stats) {
+            localStorage.setItem('youtube_stats_cache', JSON.stringify(stats));
+            localStorage.setItem('youtube_stats_cache_timestamp', Date.now().toString());
+        }
+
+        // Fetch video statistics (view counts) with caching
         async function fetchVideoStats(videoIds) {
+            // Check if we have valid cached stats
+            if (isStatsCacheValid()) {
+                const cachedStats = getCachedStats();
+                if (cachedStats) {
+                    console.log('💾 Using cached stats data to avoid API limit');
+                    console.log('📈 Cached stats for', cachedStats.length, 'videos');
+                    return cachedStats;
+                }
+            }
+
             try {
+                console.log('🔄 Fetching fresh stats data from YouTube API...');
                 const idsString = videoIds.join(',');
                 const response = await fetch(
                     `https://www.googleapis.com/youtube/v3/videos?key=${API_KEY}&id=${idsString}&part=statistics`
                 );
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
                 const data = await response.json();
-                return data.items || [];
+                const stats = data.items || [];
+                
+                console.log('✅ SUCCESS: Fetched stats for', stats.length, 'videos');
+                
+                // Save to cache
+                saveStatsCache(stats);
+                return stats;
             } catch (error) {
                 console.error('Error fetching video stats:', error);
+                
+                // Try to use cached stats even if old
+                const cachedStats = getCachedStats();
+                if (cachedStats) {
+                    console.log('Stats API failed, using old cached data');
+                    return cachedStats;
+                }
                 return [];
             }
         }
@@ -840,15 +925,15 @@
         // Create animated particles
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
-            const particleCount = 50;
+            const particleCount = 20;
 
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
                 particle.style.left = Math.random() * 100 + '%';
                 particle.style.top = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 6 + 's';
-                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                particle.style.animationDelay = Math.random() * 10 + 's';
+                particle.style.animationDuration = (Math.random() * 6 + 8) + 's';
                 particlesContainer.appendChild(particle);
             }
         }
@@ -857,59 +942,55 @@
         function initGSAP() {
             gsap.registerPlugin(ScrollTrigger);
 
-            // Hero text animation
+            // Sidebar profile animation
             gsap.timeline()
-                .from('.hero h1', {
+                .from('.profile-section h1', {
                     duration: 1.2,
-                    y: 100,
+                    x: -100,
                     opacity: 0,
                     ease: 'power3.out',
-                    delay: 0.5
+                    delay: 0.3
                 })
-                .from('.hero .subtitle', {
+                .from('.profile-section .title', {
                     duration: 1,
-                    y: 50,
+                    x: -50,
                     opacity: 0,
                     ease: 'power3.out'
-                }, '-=0.5')
+                }, '-=0.8')
+                .from('.profile-section .description', {
+                    duration: 0.8,
+                    x: -30,
+                    opacity: 0,
+                    ease: 'power3.out'
+                }, '-=0.6')
                 .from('.contact-btn', {
                     duration: 0.8,
-                    y: 30,
+                    x: -30,
                     opacity: 0,
                     ease: 'power3.out'
-                }, '-=0.3');
+                }, '-=0.4');
 
             // Projects section animation
             gsap.from('.section-title', {
-                scrollTrigger: {
-                    trigger: '.projects',
-                    start: 'top 80%'
-                },
                 duration: 1,
-                y: 50,
+                x: 50,
                 opacity: 0,
-                ease: 'power3.out'
+                ease: 'power3.out',
+                delay: 0.8
             });
 
             // Project cards stagger animation
             gsap.from('.project-card', {
-                scrollTrigger: {
-                    trigger: '.projects-grid',
-                    start: 'top 80%'
-                },
                 duration: 0.8,
                 y: 60,
                 opacity: 0,
-                stagger: 0.2,
-                ease: 'power3.out'
+                stagger: 0.15,
+                ease: 'power3.out',
+                delay: 1.2
             });
         }
 
-        // Contact functionality (now direct email link)
-        function initContact() {
-            // Contact button now directly opens email - no modal needed
-            console.log('Contact button configured for direct email');
-        }
+
 
         // Initialize everything
         function init() {
@@ -923,21 +1004,18 @@
             // Initialize GSAP animations
             initGSAP();
 
-            // Initialize contact
-            initContact();
-
             // Create particles
             createParticles();
 
             // Load YouTube API
             loadYouTubeAPI();
 
-            // Set up periodic view count updates (every 5 minutes)
+            // Set up periodic view count updates (every 30 minutes to match cache)
             setInterval(() => {
                 if (players.length > 0) {
                     updateViewCounts();
                 }
-            }, 300000); // 5 minutes = 300,000 milliseconds
+            }, 1800000); // 30 minutes = 1,800,000 milliseconds
 
             // Update page content after DOM is loaded
             updatePageContent();
