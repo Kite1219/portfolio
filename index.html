@@ -79,6 +79,44 @@
             50% { transform: translateY(-30px) rotate(180deg); opacity: 0.1; }
         }
 
+        /* Projects Header */
+        .projects-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* Sort Toggle */
+        .sort-toggle {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 0px;
+            padding: 4px 7px;
+            font-size: 0.75rem;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            opacity: 0;
+            transform: translateY(-30px);
+            animation: slideDown 0.6s ease forwards;
+            animation-delay: 1s;
+        }
+
+        .sort-toggle:hover {
+            background: var(--text-primary);
+            color: var(--primary-bg);
+            border-color: var(--text-primary);
+        }
+
+        @keyframes slideDown {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         /* Main Layout */
         .main-container {
             display: flex;
@@ -156,8 +194,8 @@
         .section-title {
             font-size: 1.4rem;
             font-weight: 600;
-            text-align: center;
-            padding: 0;
+            text-align: left;
+            padding: 0 0 0 3px;
             color: var(--text-primary);
             font-family: 'Inter', sans-serif;
             letter-spacing: -0.01em;
@@ -316,33 +354,63 @@
 
 
 
-        /* Loading Animation */
+        /* Loading Animation - Full Frame Pulsing Effect */
         .loading {
-            display: inline-block;
-            width: 24px;
-            height: 24px;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            border-top-color: #ffffff;
-            animation: simpleSpinning 1s linear infinite;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #1a1a1a;
+            animation: breathingPulse 2s ease-in-out infinite;
             z-index: 10;
+            border-radius: 0;
         }
 
-        @keyframes simpleSpinning {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        @keyframes breathingPulse {
+            0% { 
+                background: #2a2a2a;
+            }
+            25% { 
+                background: #222222;
+            }
+            50% { 
+                background: #1a1a1a;
+            }
+            75% { 
+                background: #202020;
+            }
+            100% { 
+                background: #2a2a2a;
+            }
         }
 
         /* Loading state for video containers */
         .video-container .loading {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             z-index: 5;
         }
 
         /* Responsive Design */
+        @media (max-width: 1200px) {
+            .sidebar {
+                width: 300px;
+            }
+            
+            .main-content {
+                margin-left: 300px;
+            }
+            
+            .projects-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 4px;
+            }
+        }
+
         @media (max-width: 1024px) {
             .sidebar {
                 width: 280px;
@@ -358,7 +426,32 @@
             }
         }
 
+        @media (max-width: 900px) {
+            .sidebar {
+                width: 260px;
+            }
+            
+            .main-content {
+                margin-left: 260px;
+            }
+            
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 4px;
+            }
+        }
+
         @media (max-width: 768px) {
+            .sort-toggle {
+                position: static;
+                display: inline-block;
+                margin-left: 10px;
+                font-size: 0.7rem;
+                padding: 4px 8px;
+                background: var(--card-bg);
+                border: 1px solid var(--border-color);
+            }
+
             .main-container {
                 flex-direction: column;
             }
@@ -373,9 +466,9 @@
             }
 
             .profile-section {
-                text-align: center; /* Center text on mobile */
+                text-align: center;
                 max-width: none;
-                align-items: center; /* Center flex items */
+                align-items: center;
             }
             
             .main-content {
@@ -406,15 +499,57 @@
                 font-size: 0.8rem;
                 margin-bottom: 1.5rem;
             }
+
+            .projects-header {
+                flex-direction: column;
+                gap: 10px;
+                align-items: center;
+            }
+
+            .section-title {
+                font-size: 1.2rem;
+                text-align: center;
+                padding: 0;
+                margin: 0;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 3px;
+            }
+            
+            .profile-section h1 {
+                font-size: 1.6rem;
+            }
+
+            .profile-section .title {
+                font-size: 0.85rem;
+            }
+
+            .profile-section .description {
+                font-size: 0.75rem;
+            }
         }
 
         @media (max-width: 480px) {
+            .sort-toggle {
+                position: static;
+                display: inline-block;
+                margin-left: 8px;
+                font-size: 0.65rem;
+                padding: 3px 6px;
+                background: var(--card-bg);
+                border: 1px solid var(--border-color);
+            }
+
             .sidebar {
                 padding: 1.5rem 1rem;
             }
             
             .profile-section {
-                text-align: center; /* Ensure center alignment on small mobile */
+                text-align: center;
                 align-items: center;
             }
             
@@ -427,13 +562,6 @@
                 gap: 3px;
             }
             
-            /* Better spacing for very small screens */
-            .main-content {
-                padding: 0.5rem 0.25rem;
-            }
-            
-
-
             .profile-section h1 {
                 font-size: 1.5rem;
             }
@@ -446,6 +574,19 @@
             .profile-section .description {
                 font-size: 0.75rem;
                 margin-bottom: 1.25rem;
+            }
+            
+            .projects-header {
+                flex-direction: column;
+                gap: 8px;
+                align-items: center;
+            }
+
+            .section-title {
+                font-size: 1.1rem;
+                text-align: center;
+                padding: 0;
+                margin: 0;
             }
             
             .click-indicator {
@@ -466,8 +607,61 @@
             }
         }
 
+        @media (max-width: 400px) {
+            .sort-toggle {
+                position: static;
+                display: inline-block;
+                margin-left: 6px;
+                font-size: 0.6rem;
+                padding: 2px 5px;
+                background: var(--card-bg);
+                border: 1px solid var(--border-color);
+            }
+
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2px;
+            }
+            
+            .profile-section h1 {
+                font-size: 1.4rem;
+            }
+
+            .profile-section .title {
+                font-size: 0.8rem;
+            }
+
+            .profile-section .description {
+                font-size: 0.7rem;
+            }
+            
+            .projects-header {
+                flex-direction: column;
+                gap: 6px;
+                align-items: center;
+                margin-bottom: 10px;
+            }
+
+            .section-title {
+                font-size: 1rem;
+                text-align: center;
+                padding: 0;
+                margin: 0;
+            }
+        }
+
         /* Extra small screens - single column layout */
         @media (max-width: 360px) {
+            .sort-toggle {
+                position: static;
+                display: inline-block;
+                margin-left: 5px;
+                font-size: 0.55rem;
+                padding: 2px 4px;
+                background: var(--card-bg);
+                border: 1px solid var(--border-color);
+            }
+
             .projects-grid {
                 grid-template-columns: 1fr;
                 gap: 4px;
@@ -489,6 +683,68 @@
             .sidebar {
                 padding: 1rem 0.75rem;
             }
+
+            .projects-header {
+                flex-direction: column;
+                gap: 5px;
+                align-items: center;
+                margin-bottom: 8px;
+            }
+
+            .section-title {
+                font-size: 0.9rem;
+                text-align: center;
+                padding: 0;
+                margin: 0;
+            }
+        }
+
+        /* Landscape orientation adjustments */
+        @media (max-height: 600px) and (orientation: landscape) {
+            .sidebar {
+                padding: 1rem 1.5rem;
+            }
+            
+            .profile-section h1 {
+                font-size: 1.5rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .profile-section .title {
+                font-size: 0.8rem;
+                margin-bottom: 1rem;
+            }
+
+            .profile-section .description {
+                font-size: 0.7rem;
+                margin-bottom: 1rem;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--sidebar-bg);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+            transition: background 0.3s ease;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
+        }
+
+        /* Firefox scrollbar */
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: var(--border-color) var(--sidebar-bg);
         }
 
         /* Scroll Animation Classes */
@@ -533,22 +789,25 @@
         <!-- Main Content -->
         <main class="main-content">
             <section class="projects" id="projects">
-                <h2 class="section-title"></h2>
+                <div class="projects-header">
+                    <h2 class="section-title"></h2>
+                    <div class="sort-toggle" id="sortToggle">Latest</div>
+                </div>
                 <div class="projects-grid" id="projectsGrid">
                     <!-- Projects will be loaded dynamically -->
                     <div class="project-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
                         <div class="video-container">
-                            <div class="loading" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></div>
+                            <div class="loading"></div>
                         </div>
                     </div>
                     <div class="project-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
                         <div class="video-container">
-                            <div class="loading" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></div>
+                            <div class="loading"></div>
                         </div>
                     </div>
                     <div class="project-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
                         <div class="video-container">
-                            <div class="loading" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></div>
+                            <div class="loading"></div>
                         </div>
                     </div>
                 </div>
@@ -569,6 +828,9 @@
         const CHANNEL_ID = WEBSITE_CONFIG.youtubeChannelId;
         let players = [];
         let isYouTubeAPIReady = false;
+        let currentVideos = [];
+        let currentStats = [];
+        let currentSortMode = 'latest'; // 'latest' or 'views'
 
         // Update page title and content when page loads
         function updatePageContent() {
@@ -583,6 +845,41 @@
             document.querySelector('.section-title').textContent = WEBSITE_CONFIG.projectsTitle;
             
 
+        }
+
+        // Sort toggle functionality
+        function initSortToggle() {
+            const sortToggle = document.getElementById('sortToggle');
+            
+            sortToggle.addEventListener('click', () => {
+                currentSortMode = currentSortMode === 'latest' ? 'views' : 'latest';
+                sortToggle.textContent = currentSortMode === 'latest' ? 'Latest' : 'Views';
+                
+                // Re-sort and display videos
+                if (currentVideos.length > 0) {
+                    const sortedVideos = sortVideos(currentVideos, currentStats);
+                    createVideoCards(sortedVideos);
+                }
+            });
+        }
+
+        // Sort videos based on current mode
+        function sortVideos(videos, stats) {
+            if (currentSortMode === 'latest') {
+                // Sort by date (already in chronological order from API)
+                return videos;
+            } else {
+                // Sort by views (highest first)
+                return videos.slice().sort((a, b) => {
+                    const statsA = stats.find(s => s.id === a.id.videoId);
+                    const statsB = stats.find(s => s.id === b.id.videoId);
+                    
+                    const viewsA = statsA ? parseInt(statsA.statistics.viewCount) : 0;
+                    const viewsB = statsB ? parseInt(statsB.statistics.viewCount) : 0;
+                    
+                    return viewsB - viewsA;
+                });
+            }
         }
 
         // Load YouTube IFrame API
@@ -631,7 +928,14 @@
                 if (cachedVideos) {
                     console.log('💾 Using cached video data to avoid API limit');
                     console.log('📊 Cached videos:', cachedVideos.length, 'items');
-                    createVideoCards(cachedVideos);
+                    currentVideos = cachedVideos;
+                    
+                    // Load stats and then create cards
+                    const videoIds = cachedVideos.map(v => v.id.videoId);
+                    currentStats = await fetchVideoStats(videoIds);
+                    const sortedVideos = sortVideos(currentVideos, currentStats);
+                    createVideoCards(sortedVideos);
+                    
                     showSuccessIndicator('Loaded from cache (API limit saved!)');
                     return;
                 }
@@ -653,9 +957,15 @@
                 if (data.items && data.items.length > 0) {
                     console.log('✅ SUCCESS: Fetched', data.items.length, 'videos from YouTube API');
                     console.log('📊 Video data:', data.items.map(v => v.snippet.title));
-                    // Save to cache before creating cards
+                    
+                    currentVideos = data.items;
                     saveVideoCache(data.items);
-                    createVideoCards(data.items);
+                    
+                    // Load stats and then create cards
+                    const videoIds = data.items.map(v => v.id.videoId);
+                    currentStats = await fetchVideoStats(videoIds);
+                    const sortedVideos = sortVideos(currentVideos, currentStats);
+                    createVideoCards(sortedVideos);
                     
                     // Add success indicator to page
                     showSuccessIndicator('Fresh video data loaded successfully!');
@@ -666,8 +976,13 @@
                         { id: { videoId: 'jNQXAC9IVRw' }, snippet: { title: 'Project Demo 2' } },
                         { id: { videoId: 'fJ9rUzIMcZQ' }, snippet: { title: 'Project Demo 3' } }
                     ];
+                    currentVideos = fallbackVideos;
                     saveVideoCache(fallbackVideos);
-                    createVideoCards(fallbackVideos);
+                    
+                    const videoIds = fallbackVideos.map(v => v.id.videoId);
+                    currentStats = await fetchVideoStats(videoIds);
+                    const sortedVideos = sortVideos(currentVideos, currentStats);
+                    createVideoCards(sortedVideos);
                 }
             } catch (error) {
                 console.error('Error loading videos:', error);
@@ -676,7 +991,12 @@
                 const cachedVideos = getCachedVideos();
                 if (cachedVideos) {
                     console.log('API failed, using old cached data');
-                    createVideoCards(cachedVideos);
+                    currentVideos = cachedVideos;
+                    
+                    const videoIds = cachedVideos.map(v => v.id.videoId);
+                    currentStats = await fetchVideoStats(videoIds);
+                    const sortedVideos = sortVideos(currentVideos, currentStats);
+                    createVideoCards(sortedVideos);
                 } else {
                     // Final fallback videos
                     const fallbackVideos = [
@@ -684,7 +1004,12 @@
                         { id: { videoId: 'jNQXAC9IVRw' }, snippet: { title: 'Project Demo 2' } },
                         { id: { videoId: 'fJ9rUzIMcZQ' }, snippet: { title: 'Project Demo 3' } }
                     ];
-                    createVideoCards(fallbackVideos);
+                    currentVideos = fallbackVideos;
+                    
+                    const videoIds = fallbackVideos.map(v => v.id.videoId);
+                    currentStats = await fetchVideoStats(videoIds);
+                    const sortedVideos = sortVideos(currentVideos, currentStats);
+                    createVideoCards(sortedVideos);
                 }
             }
         }
@@ -801,6 +1126,9 @@
         function createVideoCards(videos) {
             const grid = document.getElementById('projectsGrid');
             grid.innerHTML = '';
+            
+            // Clear existing players
+            players = [];
 
             videos.forEach((video, index) => {
                 const card = document.createElement('div');
@@ -865,7 +1193,9 @@
 
                                 // Update view counts when all players are ready
                                 if (players.length === videos.length) {
-                                    setTimeout(updateViewCounts, 1000);
+                                    setTimeout(() => {
+                                        updateViewCountsFromStats();
+                                    }, 1000);
                                 }
                             },
                             onStateChange: (event) => {
@@ -881,6 +1211,30 @@
 
             // Refresh AOS animations
             AOS.refresh();
+        }
+
+        // Update view counts from existing stats data
+        function updateViewCountsFromStats() {
+            currentStats.forEach(stat => {
+                const videoId = stat.id;
+                const viewCount = stat.statistics.viewCount;
+                const playerData = players.find(p => p.videoId === videoId);
+                
+                if (playerData) {
+                    let viewCounter = playerData.element.querySelector('.view-counter');
+                    
+                    // Create view counter if it doesn't exist
+                    if (!viewCounter) {
+                        viewCounter = document.createElement('div');
+                        viewCounter.className = 'view-counter';
+                        const videoContainer = playerData.element.querySelector('.video-container');
+                        videoContainer.appendChild(viewCounter);
+                    }
+                    
+                    // Update view counter content
+                    viewCounter.innerHTML = `<span class="eye-icon">👁</span>${formatViewCount(viewCount)}`;
+                }
+            });
         }
 
         // Intersection Observer for video autoplay
@@ -973,7 +1327,7 @@
             // Projects section animation
             gsap.from('.section-title', {
                 duration: 1,
-                x: 50,
+                y: -50,
                 opacity: 0,
                 ease: 'power3.out',
                 delay: 0.8
@@ -990,7 +1344,10 @@
             });
         }
 
-
+        // Show success indicator (placeholder function)
+        function showSuccessIndicator(message) {
+            console.log('✅', message);
+        }
 
         // Initialize everything
         function init() {
@@ -1003,6 +1360,9 @@
 
             // Initialize GSAP animations
             initGSAP();
+
+            // Initialize sort toggle
+            initSortToggle();
 
             // Create particles
             createParticles();
@@ -1047,4 +1407,4 @@
         window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
     </script>
 </body>
-</html> 
+</html>
